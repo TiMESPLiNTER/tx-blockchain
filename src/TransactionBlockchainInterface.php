@@ -26,6 +26,13 @@ interface TransactionBlockchainInterface extends BlockchainInterface
     public function addTransaction(TransactionInterface $transaction): bool;
 
     /**
+     * Checks if a transaction is valid and eligible to be added to the pending transaction pool
+     * @param TransactionInterface $transaction
+     * @return bool True if transaction is valid otherwise false
+     */
+    public function isTransactionValid(TransactionInterface $transaction): bool;
+
+    /**
      * Returns all pending transactions which haven't been included in a mined block yet
      * @return array|TransactionInterface[]
      */
