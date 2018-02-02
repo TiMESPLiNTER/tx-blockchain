@@ -12,14 +12,16 @@ use Timesplinter\Blockchain\BlockchainInterface;
 interface TransactionBlockchainInterface extends BlockchainInterface
 {
     /**
+     * Calculates the balance for a given address based on the transactions stored in the blockchain
      * @param string $address
-     * @return float
+     * @return float The balance for the given address
      */
     public function getBalanceForAddress(string $address): float;
 
     /**
+     * Adds a transaction to the pool of pending transactions
      * @param TransactionInterface $transaction
-     * @return bool
+     * @return bool True if transaction is valid and successfully added to the pool otherwise false
      */
     public function addTransaction(TransactionInterface $transaction): bool;
 
