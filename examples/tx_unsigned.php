@@ -5,23 +5,12 @@ namespace Timesplinter\TxBlockchain\Tests;
 use Timesplinter\Blockchain\Blockchain;
 use Timesplinter\Blockchain\Strategy\ProofOfWork\ProofOfWorkBlock as Block;
 use Timesplinter\Blockchain\Strategy\ProofOfWork\ProofOfWorkStrategy;
+use Timesplinter\TxBlockchain\SignedTransaction;
 use Timesplinter\TxBlockchain\Transaction;
 use Timesplinter\TxBlockchain\TransactionBlockchain;
 use Timesplinter\TxBlockchain\TransactionSignatureException;
 
 require __DIR__ . '/../vendor/autoload.php';
-
-//
-// Pub/Priv key generation
-//
-$info = (new \Phactor\Key())->GenerateKeypair();
-
-$publicAddress = $info['public_key_compressed'];
-$privateKey = $info['private_key_hex'];
-
-echo 'Public address: ' , $publicAddress , PHP_EOL;
-echo 'Private key: ' , $privateKey , ' (keep this a secret!)' ,  PHP_EOL;
-echo PHP_EOL , '---' , PHP_EOL , PHP_EOL;
 
 //
 // Blockchain stuff
@@ -36,7 +25,7 @@ $txPool = new TransactionBlockchain($blockchain);
 $start = microtime(true);
 
 // Mine block 1
-$blockchain->addBlock($block1 = new Block([new Transaction(null, $publicAddress, 200)], new \DateTime('2018-01-01')));
+$blockchain->addBlock($block1 = new Block([new Transaction(null, 'pascal', 200)], new \DateTime('2018-01-01')));
 echo 'Block 1 successfully mined. Hash: ' , $block1->getHash() , PHP_EOL;
 
 // Mine block 2
@@ -50,8 +39,7 @@ echo 'Blockchain valid: ' , print_r($blockchain->isValid(), true) , PHP_EOL;
 
 // Add (signed) transaction to tx pool
 try {
-    $tx = new Transaction($publicAddress, 'john', 10);
-    $tx->sign($privateKey);
+    $tx = new Transaction('pascal', 'john', 10);
 
     echo 'Transaction valid: ', print_r($txPool->addTransaction($tx), true), PHP_EOL;
 } catch (TransactionSignatureException $e) {

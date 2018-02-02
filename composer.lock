@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ef23e0389f9dd35ac4239c21ebe77db",
+    "content-hash": "108cf9535e021b3991547795d7733cba",
     "packages": [
         {
             "name": "ionux/phactor",
@@ -107,16 +107,16 @@
         },
         {
             "name": "timesplinter/blockchain",
-            "version": "dev-tx",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git@github.com:TiMESPLiNTER/blockchain.git",
-                "reference": "42f4ffafe1019129a6d45e9d1ed583d3d541d88c"
+                "reference": "aac7daa8f6c3019d9b065abf52893762de6839f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TiMESPLiNTER/blockchain/zipball/42f4ffafe1019129a6d45e9d1ed583d3d541d88c",
-                "reference": "42f4ffafe1019129a6d45e9d1ed583d3d541d88c",
+                "url": "https://api.github.com/repos/TiMESPLiNTER/blockchain/zipball/aac7daa8f6c3019d9b065abf52893762de6839f4",
+                "reference": "aac7daa8f6c3019d9b065abf52893762de6839f4",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                     "email": "github@timesplinter.ch"
                 }
             ],
-            "time": "2018-02-02T14:50:43+00:00"
+            "time": "2018-02-02T18:17:50+00:00"
         }
     ],
     "packages-dev": [

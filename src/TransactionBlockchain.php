@@ -17,7 +17,7 @@ final class TransactionBlockchain implements BlockchainInterface
     private $blockchain;
 
     /**
-     * @var array
+     * @var array|TransactionInterface[]
      */
     private $pool = [];
 
@@ -30,11 +30,11 @@ final class TransactionBlockchain implements BlockchainInterface
     }
 
     /**
-     * @param Transaction $transaction
+     * @param TransactionInterface $transaction
      * @return bool
      * @throws TransactionSignatureException
      */
-    public function addTransaction(Transaction $transaction): bool
+    public function addTransaction(TransactionInterface $transaction): bool
     {
         if (false === $this->isTransactionValid($transaction)) {
             return false;
@@ -46,13 +46,13 @@ final class TransactionBlockchain implements BlockchainInterface
     }
 
     /**
-     * @param Transaction $transaction
+     * @param TransactionInterface $transaction
      * @return bool
      * @throws TransactionSignatureException
      */
-    public function isTransactionValid(Transaction $transaction): bool
+    public function isTransactionValid(TransactionInterface $transaction): bool
     {
-        if (false === $transaction->isSignatureValid()) {
+        if ($transaction instanceof SignedTransactionInterface && false === $transaction->isSignatureValid()) {
             return false;
         }
 
@@ -75,11 +75,11 @@ final class TransactionBlockchain implements BlockchainInterface
             }
 
             foreach ($block->getData() as $transaction) {
-                if (false === $transaction instanceof Transaction) {
+                if (false === $transaction instanceof TransactionInterface) {
                     continue;
                 }
 
-                /** @var Transaction $transaction */
+                /** @var TransactionInterface $transaction */
 
                 if ($address === $transaction->getFrom()) {
                     $balance -= $transaction->getAmount();
@@ -138,7 +138,7 @@ final class TransactionBlockchain implements BlockchainInterface
         }
 
         foreach ($block->getData() as $transaction) {
-            if (false === $transaction instanceof Transaction) {
+            if (false === $transaction instanceof TransactionInterface) {
                 return false;
             }
         }
