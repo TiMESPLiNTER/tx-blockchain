@@ -8,7 +8,7 @@ use Timesplinter\Blockchain\BlockchainInterface;
 use Timesplinter\Blockchain\BlockchainIterator;
 use Timesplinter\Blockchain\BlockInterface;
 
-final class TransactionBlockchain implements BlockchainInterface
+final class TransactionBlockchain implements TransactionBlockchainInterface
 {
 
     /**
@@ -106,6 +106,17 @@ final class TransactionBlockchain implements BlockchainInterface
         }
 
         $this->blockchain->addBlock($block);
+
+        // Remove all transactions from the pool which are included in the minded block
+        $pendingTransactions = [];
+
+        foreach ($this->pool as $transaction) {
+            if (false === in_array($transaction, $block->getData(), true)) {
+                $pendingTransactions[] = $transaction;
+            }
+        }
+
+        $this->pool = $pendingTransactions;
     }
 
     /**
@@ -152,5 +163,14 @@ final class TransactionBlockchain implements BlockchainInterface
     public function getIterator(): BlockchainIterator
     {
         return $this->blockchain->getIterator();
+    }
+
+    /**
+     * Returns all pending transactions which haven't been included in a mined block yet
+     * @return array|TransactionInterface[]
+     */
+    public function getPendingTransactions(): array
+    {
+        return $this->pool;
     }
 }

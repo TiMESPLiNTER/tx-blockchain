@@ -20,16 +20,16 @@ $blockchain = new Blockchain(
     new Block('This is the genesis block', new \DateTime('1970-01-01'))
 );
 
-$txPool = new TransactionBlockchain($blockchain);
+$txBlockchain = new TransactionBlockchain($blockchain);
 
 $start = microtime(true);
 
 // Mine block 1
-$blockchain->addBlock($block1 = new Block([new Transaction(null, 'pascal', 200)], new \DateTime('2018-01-01')));
+$txBlockchain->addBlock($block1 = new Block([new Transaction(null, 'pascal', 200)], new \DateTime('2018-01-01')));
 echo 'Block 1 successfully mined. Hash: ' , $block1->getHash() , PHP_EOL;
 
 // Mine block 2
-$blockchain->addBlock($block2 = new Block([], new \DateTime('2018-01-22')));
+$txBlockchain->addBlock($block2 = new Block([], new \DateTime('2018-01-22')));
 echo 'Block 2 successfully mined. Hash: ' , $block2->getHash() , PHP_EOL;
 
 echo 'Duration: ' , round(microtime(true) - $start, 4) , ' seconds' , PHP_EOL;
@@ -41,7 +41,14 @@ echo 'Blockchain valid: ' , print_r($blockchain->isValid(), true) , PHP_EOL;
 try {
     $tx = new Transaction('pascal', 'john', 10);
 
-    echo 'Transaction valid: ', print_r($txPool->addTransaction($tx), true), PHP_EOL;
+    echo 'Transaction valid: ', print_r($txBlockchain->addTransaction($tx), true), PHP_EOL;
+
+    echo 'There are now ' , count($txBlockchain->getPendingTransactions()) , ' pending transactions' , PHP_EOL;
+
+    $txBlockchain->addBlock($block3 = new Block([$tx], new \DateTime()));
+    echo 'Block 3 successfully mined. Hash: ' , $block3->getHash() , PHP_EOL;
+
+    echo 'There are now ' , count($txBlockchain->getPendingTransactions()) , ' pending transactions' , PHP_EOL;
 } catch (TransactionSignatureException $e) {
     echo 'ERROR: ' , $e->getMessage() , PHP_EOL;
 }
