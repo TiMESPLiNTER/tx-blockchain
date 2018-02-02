@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "timesplinter/blockchain": "dev-tx",
+        "timesplinter/blockchain": "dev-master",
         "ionux/phactor": "dev-master@dev"
     },
     "require-dev": {
