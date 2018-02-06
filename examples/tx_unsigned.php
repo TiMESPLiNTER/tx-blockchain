@@ -39,7 +39,7 @@ echo 'Duration: ' , round(microtime(true) - $start, 4) , ' seconds' , PHP_EOL;
 // Check if blockchain is still valid
 echo 'Blockchain valid: ' , print_r($blockchain->isValid(), true) , PHP_EOL;
 
-// Add (signed) transaction to tx pool
+// Add (unsigned) transaction to tx pool
 try {
     $tx = new Transaction('pascal', 'john', 10);
 
