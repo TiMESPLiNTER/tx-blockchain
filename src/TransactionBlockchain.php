@@ -7,6 +7,7 @@ namespace Timesplinter\TxBlockchain;
 use Timesplinter\Blockchain\BlockchainInterface;
 use Timesplinter\Blockchain\BlockchainIterator;
 use Timesplinter\Blockchain\BlockInterface;
+use Timesplinter\Blockchain\Storage\StorageInterface;
 
 final class TransactionBlockchain implements TransactionBlockchainInterface
 {
@@ -158,9 +159,9 @@ final class TransactionBlockchain implements TransactionBlockchainInterface
     }
 
     /**
-     * @return BlockchainIterator
+     * @return StorageInterface
      */
-    public function getIterator(): BlockchainIterator
+    public function getIterator(): StorageInterface
     {
         return $this->blockchain->getIterator();
     }
@@ -172,5 +173,30 @@ final class TransactionBlockchain implements TransactionBlockchainInterface
     public function getPendingTransactions(): array
     {
         return $this->pool;
+    }
+
+    /**
+     * Returns the block at the specified position
+     * @param int $position
+     * @return BlockInterface
+     * @throws \OutOfBoundsException
+     */
+    public function getBlock(int $position): BlockInterface
+    {
+        return $this->blockchain->getBlock($position);
+    }
+
+    /**
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count()
+    {
+        return $this->blockchain->count();
     }
 }

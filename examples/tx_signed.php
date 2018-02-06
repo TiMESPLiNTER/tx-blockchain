@@ -3,6 +3,7 @@
 namespace Timesplinter\TxBlockchain\Tests;
 
 use Timesplinter\Blockchain\Blockchain;
+use Timesplinter\Blockchain\Storage\InMemory\InMemoryStorage;
 use Timesplinter\Blockchain\Strategy\ProofOfWork\ProofOfWorkBlock as Block;
 use Timesplinter\Blockchain\Strategy\ProofOfWork\ProofOfWorkStrategy;
 use Timesplinter\TxBlockchain\SignedTransaction;
@@ -28,6 +29,7 @@ echo PHP_EOL , '---' , PHP_EOL , PHP_EOL;
 //
 $blockchain = new Blockchain(
     new ProofOfWorkStrategy(2),
+    new InMemoryStorage(),
     new Block('This is the genesis block', new \DateTime('1970-01-01'))
 );
 

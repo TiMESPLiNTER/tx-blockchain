@@ -111,12 +111,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:TiMESPLiNTER/blockchain.git",
-                "reference": "aac7daa8f6c3019d9b065abf52893762de6839f4"
+                "reference": "5f49f7b52f34a25e5771b17be4ea7647c645cec7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TiMESPLiNTER/blockchain/zipball/aac7daa8f6c3019d9b065abf52893762de6839f4",
-                "reference": "aac7daa8f6c3019d9b065abf52893762de6839f4",
+                "url": "https://api.github.com/repos/TiMESPLiNTER/blockchain/zipball/5f49f7b52f34a25e5771b17be4ea7647c645cec7",
+                "reference": "5f49f7b52f34a25e5771b17be4ea7647c645cec7",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                     "email": "github@timesplinter.ch"
                 }
             ],
-            "time": "2018-02-02T18:17:50+00:00"
+            "time": "2018-02-06T20:23:17+00:00"
         }
     ],
     "packages-dev": [
