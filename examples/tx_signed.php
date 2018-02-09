@@ -48,21 +48,24 @@ echo 'Block 2 successfully mined. Hash: ' , $block2->getHash() , PHP_EOL;
 echo 'Duration: ' , round(microtime(true) - $start, 4) , ' seconds' , PHP_EOL;
 
 // Check if blockchain is still valid
-echo 'Blockchain valid: ' , print_r($blockchain->isValid(), true) , PHP_EOL;
+echo 'Blockchain valid: ' , ((int) $blockchain->isValid()) , PHP_EOL;
 
 // Add (signed) transaction to tx pool
 try {
-    $tx = new SignedTransaction($publicAddress, 'john', 10);
+    $tx = new SignedTransaction($publicAddress, 'nick', 10);
     $tx->sign($privateKey);
 
-    echo 'Transaction valid: ', print_r($txBlockchain->addTransaction($tx), true), PHP_EOL;
+    echo 'Transaction valid: ', ((int) $txBlockchain->addTransaction($tx)), PHP_EOL;
 
     echo 'There are now ' , count($txBlockchain->getPendingTransactions()) , ' pending transactions' , PHP_EOL;
 
-    $txBlockchain->addBlock($block3 = new Block([$tx], new \DateTime()));
+    $txBlockchain->addBlock($block3 = new Block($txBlockchain->getPendingTransactions(), new \DateTime()));
     echo 'Block 3 successfully mined. Hash: ' , $block3->getHash() , PHP_EOL;
 
     echo 'There are now ' , count($txBlockchain->getPendingTransactions()) , ' pending transactions' , PHP_EOL;
+
+    echo $publicAddress . '\'s balance: ', $txBlockchain->getBalanceForAddress($publicAddress), PHP_EOL;
+    echo 'Nick\'s balance: ', $txBlockchain->getBalanceForAddress('nick'), PHP_EOL;
 } catch (TransactionSignatureException $e) {
     echo 'ERROR: ' , $e->getMessage() , PHP_EOL;
 }

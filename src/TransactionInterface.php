@@ -33,4 +33,10 @@ interface TransactionInterface
      * @return \DateTime
      */
     public function getTimestamp(): \DateTime;
+
+    /**
+     * Checks whether a transaction is valid or not
+     * @return bool Returns true if the transaction is valid false otherwise
+     */
+    public function valid(): bool;
 }

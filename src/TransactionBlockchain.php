@@ -33,7 +33,6 @@ final class TransactionBlockchain implements TransactionBlockchainInterface
     /**
      * @param TransactionInterface $transaction
      * @return bool
-     * @throws TransactionSignatureException
      */
     public function addTransaction(TransactionInterface $transaction): bool
     {
@@ -49,17 +48,21 @@ final class TransactionBlockchain implements TransactionBlockchainInterface
     /**
      * @param TransactionInterface $transaction
      * @return bool
-     * @throws TransactionSignatureException
      */
     public function isTransactionValid(TransactionInterface $transaction): bool
     {
-        if ($transaction instanceof SignedTransactionInterface && false === $transaction->isSignatureValid()) {
+        if (false === $transaction->valid()) {
             return false;
         }
 
-        $balanceOfSender = $this->getBalanceForAddress($transaction->getFrom());
+        if (null !== $from = $transaction->getFrom()) {
+            // Check if balance of sender is too low
+            $balanceOfSender = $this->getBalanceForAddress($from);
 
-        return $balanceOfSender >= $transaction->getAmount();
+            return $balanceOfSender >= $transaction->getAmount();
+        }
+
+        return true;
     }
 
     /**
@@ -151,6 +154,12 @@ final class TransactionBlockchain implements TransactionBlockchainInterface
 
         foreach ($block->getData() as $transaction) {
             if (false === $transaction instanceof TransactionInterface) {
+                return false;
+            }
+
+            /** @var TransactionInterface $transaction */
+
+            if (false === $this->isTransactionValid($transaction)) {
                 return false;
             }
         }

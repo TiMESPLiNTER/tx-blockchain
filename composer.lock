@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "108cf9535e021b3991547795d7733cba",
+    "content-hash": "b378e98fe340fda1c023e44b022e48eb",
     "packages": [
         {
             "name": "ionux/phactor",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ionux/phactor.git",
-                "reference": "a59007d16aefec74b1e7da8ce05ca2c87cd6dfdd"
+                "reference": "d91a2cc442ba566393157a21a2ae1877e7e278cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ionux/phactor/zipball/a59007d16aefec74b1e7da8ce05ca2c87cd6dfdd",
-                "reference": "a59007d16aefec74b1e7da8ce05ca2c87cd6dfdd",
+                "url": "https://api.github.com/repos/ionux/phactor/zipball/d91a2cc442ba566393157a21a2ae1877e7e278cc",
+                "reference": "d91a2cc442ba566393157a21a2ae1877e7e278cc",
                 "shasum": ""
             },
             "require": {
@@ -26,17 +26,14 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.1.3"
+                "phpunit/phpunit": "^5.7.9"
             },
             "suggest": {
                 "ext-gmp": "Highest performing math library and preferred for this library's Elliptic Curve calculations."
             },
             "type": "library",
             "extra": {
-                "patches_applied": {
-                    "PHP 7.2": "https://patch-diff.githubusercontent.com/raw/ionux/phactor/pull/8.patch",
-                    "Fix parseCompressedPublicKey": "https://patch-diff.githubusercontent.com/raw/ionux/phactor/pull/10.patch"
-                }
+                "patches_applied": []
             },
             "autoload": {
                 "psr-4": {
@@ -103,7 +100,7 @@
                 "signature",
                 "verify"
             ],
-            "time": "2017-06-20T15:59:49+00:00"
+            "time": "2018-02-07T17:20:31+00:00"
         },
         {
             "name": "timesplinter/blockchain",
@@ -1114,15 +1111,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "ceaeb5d93eb3cf16184957e7141bd34a1edd44e1"
+                "reference": "eb71ad57e2b937a06c91a60efc647f28187626e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/ceaeb5d93eb3cf16184957e7141bd34a1edd44e1",
-                "reference": "ceaeb5d93eb3cf16184957e7141bd34a1edd44e1",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/eb71ad57e2b937a06c91a60efc647f28187626e9",
+                "reference": "eb71ad57e2b937a06c91a60efc647f28187626e9",
                 "shasum": ""
             },
             "require": {
+                "ext-posix": "*",
                 "php": "^7.0"
             },
             "require-dev": {
@@ -1156,7 +1154,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2017-11-16T09:47:49+00:00"
+            "time": "2018-02-09T07:31:46+00:00"
         },
         {
             "name": "sebastian/exporter",

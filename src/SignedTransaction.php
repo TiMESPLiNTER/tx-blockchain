@@ -32,14 +32,31 @@ class SignedTransaction extends Transaction implements SignedTransactionInterfac
      * @return bool
      * @throws TransactionSignatureException
      */
+    public function valid(): bool
+    {
+        if (false === parent::valid()) {
+            return false;
+        }
+
+        return $this->isSignatureValid();
+    }
+
+    /**
+     * @return bool
+     * @throws TransactionSignatureException
+     */
     public function isSignatureValid(): bool
     {
+        if (null === $from = $this->getFrom()) {
+            return true;
+        }
+
         if (null === $this->signature) {
             return false;
         }
 
         try {
-            return (new Signature())->Verify($this->signature, json_encode($this), $this->getFrom());
+            return (new Signature())->Verify($this->signature, json_encode($this), $from);
         } catch (\Exception $e) {
             throw new TransactionSignatureException('Could not verify transaction signature', 0, $e);
         }

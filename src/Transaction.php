@@ -75,4 +75,13 @@ class Transaction implements TransactionInterface
     {
         return $this->timestamp;
     }
+
+    /**
+     * Checks whether a transaction is valid or not
+     * @return bool Returns true if the transaction is valid false otherwise
+     */
+    public function valid(): bool
+    {
+        return true;
+    }
 }
