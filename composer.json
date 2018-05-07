@@ -1,7 +1,6 @@
 {
     "name": "timesplinter/tx-blockchain",
     "license": "MIT",
-    "minimum-stability": "dev",
     "repositories": [
         {
             "type": "vcs", "no-api": true, "url": "git@github.com:TiMESPLiNTER/blockchain.git"
@@ -9,7 +8,7 @@
     ],
     "require": {
         "timesplinter/blockchain": "dev-master",
-        "ionux/phactor": "dev-master"
+        "ionux/phactor": "^1.0.8"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0.0"
@@ -17,13 +16,6 @@
     "autoload": {
         "psr-4": {
             "Timesplinter\\TxBlockchain\\": "src/"
-        }
-    },
-    "extra": {
-        "patches": {
-            "ionux/phactor": {
-                "Fix parseCompressedPublicKey": "https://patch-diff.githubusercontent.com/raw/ionux/phactor/pull/10.patch"
-            }
         }
     }
 }
