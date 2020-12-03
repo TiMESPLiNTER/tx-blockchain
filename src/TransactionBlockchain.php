@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Timesplinter\TxBlockchain;
 
 use Timesplinter\Blockchain\BlockchainInterface;
-use Timesplinter\Blockchain\BlockchainIterator;
 use Timesplinter\Blockchain\BlockInterface;
 use Timesplinter\Blockchain\Storage\StorageInterface;
 
