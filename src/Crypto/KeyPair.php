@@ -6,15 +6,9 @@ namespace Timesplinter\TxBlockchain\Crypto;
 
 final class KeyPair implements KeyPairInterface
 {
-    /**
-     * @var string
-     */
-    private $public;
+    private string $public;
 
-    /**
-     * @var string
-     */
-    private $private;
+    private string $private;
 
     public function __construct(string $public, string $private)
     {
