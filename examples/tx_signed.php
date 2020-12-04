@@ -6,18 +6,19 @@ use Timesplinter\Blockchain\Blockchain;
 use Timesplinter\Blockchain\BlockFactory;
 use Timesplinter\Blockchain\Storage\InMemory\InMemoryStorage;
 use Timesplinter\Blockchain\Strategy\ProofOfWork\ProofOfWorkStrategy;
-use Timesplinter\TxBlockchain\Crypto\PhactorKeyPairGenerator;
-use Timesplinter\TxBlockchain\Crypto\PhpEccKeyPairGenerator;
+use Timesplinter\TxBlockchain\Crypto\PhpEcc\PhpEccKeyPairGenerator;
+use Timesplinter\TxBlockchain\Crypto\PhpEcc\PhpEccTransactionSignatureProvider;
 use Timesplinter\TxBlockchain\SignedTransaction;
-use Timesplinter\TxBlockchain\TransactionBlockchain;
-use Timesplinter\TxBlockchain\TransactionSignatureException;
+use Timesplinter\TxBlockchain\Transaction\SignedTransactionValidator;
+use Timesplinter\TxBlockchain\Transaction\TransactionValidator;
+use Timesplinter\TxBlockchain\TransactionalBlockchain;
+use Timesplinter\TxBlockchain\TransactionSignerException;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 //
 // Pub/Priv key generation
 //
-$keyPairGenerator = new PhactorKeyPairGenerator();
 $keyPairGenerator = new PhpEccKeyPairGenerator();
 $keyPair = $keyPairGenerator->generate();
 
@@ -33,13 +34,16 @@ echo PHP_EOL , '---' , PHP_EOL , PHP_EOL;
 //
 $blockFactory = new BlockFactory();
 
+$transactionSignatureProvider = new PhpEccTransactionSignatureProvider();
+$transactionValidator = new SignedTransactionValidator(new TransactionValidator(), $transactionSignatureProvider);
+
 $blockchain = new Blockchain(
     new ProofOfWorkStrategy(2),
     new InMemoryStorage(),
     $blockFactory->create('This is the genesis block', new \DateTime('1970-01-01'))
 );
 
-$txBlockchain = new TransactionBlockchain($blockchain);
+$txBlockchain = new TransactionalBlockchain($blockchain, $transactionValidator);
 
 $start = microtime(true);
 
@@ -59,7 +63,7 @@ echo 'Blockchain valid: ' , ((int) $blockchain->isValid()) , PHP_EOL;
 // Add (signed) transaction to tx pool
 try {
     $tx = new SignedTransaction($publicAddress, 'nick', 10);
-    $tx->sign($privateKey);
+    $transactionSignatureProvider->sign($tx, $privateKey);
 
     echo 'Transaction valid: ', ((int) $txBlockchain->addTransaction($tx)), PHP_EOL;
 
@@ -72,6 +76,6 @@ try {
 
     echo $publicAddress . '\'s balance: ', $txBlockchain->getBalanceForAddress($publicAddress), PHP_EOL;
     echo 'Nick\'s balance: ', $txBlockchain->getBalanceForAddress('nick'), PHP_EOL;
-} catch (TransactionSignatureException $e) {
+} catch (TransactionSignerException $e) {
     echo 'ERROR: ' , $e->getMessage() , PHP_EOL;
 }

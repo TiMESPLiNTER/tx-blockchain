@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Timesplinter\TxBlockchain\Crypto\PhpEcc;
+namespace Timesplinter\TxBlockchain\Crypto\PhpEcc\Serializer;
 
 use Mdanter\Ecc\Crypto\Key\PrivateKeyInterface;
 use Mdanter\Ecc\Math\GmpMathInterface;
+use Mdanter\Ecc\Primitives\GeneratorPoint;
 use Mdanter\Ecc\Serializer\PrivateKey\PrivateKeySerializerInterface;
 
 final class HexPrivateKeySerializer implements PrivateKeySerializerInterface
 {
-    /**
-     * @var GmpMathInterface
-     */
-    private $adapter;
+    private GmpMathInterface $adapter;
 
-    public function __construct(GmpMathInterface $adapter)
+    private GeneratorPoint $generator;
+
+    public function __construct(GmpMathInterface $adapter, GeneratorPoint $generator)
     {
         $this->adapter = $adapter;
+        $this->generator = $generator;
     }
 
     /**
@@ -33,6 +34,11 @@ final class HexPrivateKeySerializer implements PrivateKeySerializerInterface
      */
     public function parse(string $formattedKey): PrivateKeyInterface
     {
-        throw new \RuntimeException('Parsing a hex private key is not supported.');
+        if (66 === strlen($formattedKey)) {
+            $formattedKey = substr($formattedKey, 2);
+        }
+
+        // maybe -> $this->adapter->hexDec($formattedKey); not sure if gmp can handle hex representation (0-9a-f)
+        return $this->generator->getPrivateKeyFrom(gmp_init($formattedKey, 16));
     }
 }

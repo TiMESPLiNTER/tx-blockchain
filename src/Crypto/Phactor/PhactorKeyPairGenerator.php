@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Timesplinter\TxBlockchain\Crypto;
+namespace Timesplinter\TxBlockchain\Crypto\Phactor;
 
 use Phactor\Key as PhactorKey;
+use Timesplinter\TxBlockchain\Crypto\KeyPair;
+use Timesplinter\TxBlockchain\Crypto\KeyPairGeneratorInterface;
+use Timesplinter\TxBlockchain\Crypto\KeyPairInterface;
 
 final class PhactorKeyPairGenerator implements KeyPairGeneratorInterface
 {

@@ -9,15 +9,9 @@ namespace Timesplinter\TxBlockchain;
  */
 interface SignedTransactionInterface
 {
-    /**
-     * @param string $privateKey
-     * @return void
-     * @throws TransactionSignatureException
-     */
-    public function sign(string $privateKey): void;
+    public function getSignature(): ?string;
 
-    /**
-     * @return bool
-     */
-    public function isSignatureValid(): bool;
+    public function setSignature(string $signature): void;
+
+    public function isSigned(): bool;
 }

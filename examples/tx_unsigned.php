@@ -8,8 +8,8 @@ use Timesplinter\Blockchain\Strategy\ProofOfWork\ProofOfWorkBlock as Block;
 use Timesplinter\Blockchain\Strategy\ProofOfWork\ProofOfWorkStrategy;
 use Timesplinter\TxBlockchain\SignedTransaction;
 use Timesplinter\TxBlockchain\Transaction;
-use Timesplinter\TxBlockchain\TransactionBlockchain;
-use Timesplinter\TxBlockchain\TransactionSignatureException;
+use Timesplinter\TxBlockchain\TransactionalBlockchain;
+use Timesplinter\TxBlockchain\TransactionSignerException;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -22,7 +22,7 @@ $blockchain = new Blockchain(
     new Block('This is the genesis block', new \DateTime('1970-01-01'))
 );
 
-$txBlockchain = new TransactionBlockchain($blockchain);
+$txBlockchain = new TransactionalBlockchain($blockchain);
 
 $start = microtime(true);
 

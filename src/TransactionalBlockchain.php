@@ -7,8 +7,9 @@ namespace Timesplinter\TxBlockchain;
 use Timesplinter\Blockchain\BlockchainInterface;
 use Timesplinter\Blockchain\BlockInterface;
 use Timesplinter\Blockchain\Storage\StorageInterface;
+use Timesplinter\TxBlockchain\Transaction\TransactionValidatorInterface;
 
-final class TransactionBlockchain implements TransactionBlockchainInterface
+final class TransactionalBlockchain implements TransactionBlockchainInterface
 {
 
     /**
@@ -17,16 +18,19 @@ final class TransactionBlockchain implements TransactionBlockchainInterface
     private $blockchain;
 
     /**
+     * @var TransactionValidatorInterface
+     */
+    private $transactionFactory;
+
+    /**
      * @var array|TransactionInterface[]
      */
     private $pool = [];
 
-    /**
-     * @param BlockchainInterface $blockchain
-     */
-    public function __construct(BlockchainInterface $blockchain)
+    public function __construct(BlockchainInterface $blockchain, TransactionValidatorInterface $transactionFactory)
     {
         $this->blockchain = $blockchain;
+        $this->transactionFactory = $transactionFactory;
     }
 
     /**
@@ -50,18 +54,7 @@ final class TransactionBlockchain implements TransactionBlockchainInterface
      */
     public function isTransactionValid(TransactionInterface $transaction): bool
     {
-        if (false === $transaction->valid()) {
-            return false;
-        }
-
-        if (null !== $from = $transaction->getFrom()) {
-            // Check if balance of sender is too low
-            $balanceOfSender = $this->getBalanceForAddress($from);
-
-            return $balanceOfSender >= $transaction->getAmount();
-        }
-
-        return true;
+        return $this->transactionFactory->validate($transaction, $this);
     }
 
     /**
